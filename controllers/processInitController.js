@@ -3,7 +3,7 @@ const soap = require("soap")
 module.exports = class ProcessInitController {
 
     static async initProcess(req, res) {
-        const url = '{URL DO SERVIDOR}/webdesk/ECMWorkflowEngineService?wsdl';
+        const url = 'http://10.10.0.70:8080/webdesk/ECMWorkflowEngineService?wsdl';
 
         soap.createClient(url, function (err, client) {
             if (err) {
@@ -12,11 +12,11 @@ module.exports = class ProcessInitController {
             }
 
             const obj = {
-                username: "{USUARIO ADM}",
-                password: "{SENHA ADM}",
-                companyId: "{COMPANY ID}",
-                processId: "{ID DO PROCESSO}",
-                comments: "Iniciado via NODE",
+                username: "adm",
+                password: "MD5:e6dab562b3167b161ead0baee0a5cf7e",
+                companyId: "2",
+                processId: "pedido_compras",
+                comments: "Iniciado via NodeJs",
                 attachments: "",
                 cardData: ""
             }
@@ -27,9 +27,8 @@ module.exports = class ProcessInitController {
                     return;
                 }
                 
-                res.status(200).json({numProcess: result.result.item[5].split("=")[1]});
+                res.status(201).json({numProcess: result.result.item[5].split("=")[1]});
             });
         });
-
     }
 }
